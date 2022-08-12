@@ -2,7 +2,7 @@
 @section('content')
 <div id="app">
    <article-component></article-component>
-   <hr>
+    <hr>
    <comments-component></comments-component>
 </div>
 

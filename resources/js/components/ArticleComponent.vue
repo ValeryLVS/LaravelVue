@@ -24,7 +24,6 @@ import { mapState }  from 'vuex'
 
 export default {
     computed: mapState({
-        // article: 'article',
         article: state => state.article.article,
         tagsLen: state => state.article.article.tags.length,
     }),

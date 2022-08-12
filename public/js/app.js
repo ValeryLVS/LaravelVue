@@ -19798,7 +19798,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component comment mounted.');
   }
 });
 
@@ -19838,7 +19838,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component likes mounted.');
   }
 });
 
@@ -19862,7 +19862,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log('Component views mounted.');
   }
 });
 
@@ -20001,16 +20001,10 @@ var _hoisted_9 = {
   role: "alert"
 };
 var _hoisted_10 = {
-  "class": "toast-container pb-2 mt-5 mx-auto",
-  style: {
-    "min-width": "100%"
-  }
+  "class": "toast-container"
 };
 var _hoisted_11 = {
-  "class": "toast showing",
-  style: {
-    "min-width": "100%"
-  }
+  "class": "toast show"
 };
 var _hoisted_12 = {
   "class": "toast-header"
@@ -20027,9 +20021,16 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 var _hoisted_14 = {
   "class": "me-auto"
 };
-var _hoisted_15 = {
-  "class": "text-muted"
-};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  type: "button",
+  "class": "btn-close",
+  "data-bs-dismiss": "toast",
+  "aria-label": "Закрыть"
+}, null, -1
+/* HOISTED */
+);
+
 var _hoisted_16 = {
   "class": "toast-body"
 };
@@ -20063,17 +20064,17 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_8], 32
   /* HYDRATE_EVENTS */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, " Комментарий успешно отправлен! ")), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.comments, function (comment) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.subject), 1
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, " Комментарий успешно отправлен! ")), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.comments, function (comment) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.subject), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.created_at), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("small", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.created_at), 1
     /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.body), 1
+    ), _hoisted_15]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.body), 1
     /* TEXT */
-    )])]);
+    )]);
   }), 256
   /* UNKEYED_FRAGMENT */
-  ))]);
+  ))])])]);
 }
 
 /***/ }),
@@ -20178,11 +20179,19 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; //w
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-// const app = new Vue({
-//     el: '#app',
-// });
 
-var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({});
+var app = (0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
+  el: '#app',
+  created: function created() {
+    var url = window.location.pathname;
+    var slug = url.substring(url.lastIndexOf('/') + 1); //console.log(url)
+    //console.log(slug)
+
+    this.$store.commit('SET_SLUG', slug);
+    this.$store.dispatch('article/getArticleData', slug);
+    this.$store.dispatch('article/viewsIncrement', slug);
+  }
+});
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -20197,19 +20206,7 @@ app.component('article-component', (__webpack_require__(/*! ./components/Article
 app.component('views-component', (__webpack_require__(/*! ./components/ViewsComponent.vue */ "./resources/js/components/ViewsComponent.vue")["default"]));
 app.component('likes-component', (__webpack_require__(/*! ./components/LikesComponent.vue */ "./resources/js/components/LikesComponent.vue")["default"]));
 app.component('comments-component', (__webpack_require__(/*! ./components/CommentsComponent.vue */ "./resources/js/components/CommentsComponent.vue")["default"]));
-(0,vue__WEBPACK_IMPORTED_MODULE_0__.createApp)({
-  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],
-  el: '#app',
-  created: function created() {
-    var url = window.location.pathname;
-    var slug = url.substring(url.lastIndexOf('/') + 1);
-    console.log(url);
-    console.log(slug);
-    this.$store.commit('SET_SLUG', slug);
-    this.$store.dispatch('article/getArticleData', slug);
-    this.$store.dispatch('article/viewsIncrement', slug);
-  }
-});
+app.use(_store__WEBPACK_IMPORTED_MODULE_1__["default"]).mount('#app');
 
 /***/ }),
 
@@ -20319,8 +20316,8 @@ var state = {
 var actions = {
   // context = {state, commit}
   getArticleData: function getArticleData(context, payload) {
-    console.log("context", context);
-    console.log("payload", payload);
+    // console.log("context", context)
+    // console.log("payload", payload)
     axios.get('/api/article-json', {
       params: {
         slug: payload
@@ -20332,8 +20329,8 @@ var actions = {
     });
   },
   viewsIncrement: function viewsIncrement(context, payload) {
-    console.log("rootState.slug", context.rootState.slug);
-    console.log("rootGetters.articleSlugRevers", context.rootGetters.articleSlugRevers);
+    //console.log("rootState.slug", context.rootState.slug)
+    //console.log("rootGetters.articleSlugRevers", context.rootGetters.articleSlugRevers)
     setTimeout(function () {
       axios.put('/api/article-views-increment', {
         slug: payload
@@ -20353,8 +20350,7 @@ var actions = {
       context.commit('SET_LIKE', !state.likeIt);
     })["catch"](function () {
       console.log('Ошибка addLike');
-    });
-    console.log("После клика по кнопке", state.likeIt);
+    }); //console.log("После клика по кнопке", state.likeIt)
   },
   addComment: function addComment(context, payload) {
     axios.post('/api/article-add-comment', {

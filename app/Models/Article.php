@@ -4,56 +4,42 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Str;
 
 class Article extends Model
 {
     use HasFactory;
 
-    //Доступные поля при массовом заполнение
     protected $fillable = ['title', 'body', 'img', 'slug'];
 
-    public $dates = ['published_at'];
-
-    //Не доступные поля при массовом заполнение
-    protected $quarded = [];
-
-    public function comments(): HasMany
-    {
+    public function comments() {
         return $this->hasMany(Comment::class);
     }
 
-    public function state(): HasOne
-    {
+    public function state() {
         return $this->hasOne(State::class);
     }
 
-    public function tags(): BelongsToMany
-    {
+    public function tags() {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function getBodyPreview(){
+        return Str::limit($this->body, 100);
+    }
+
+    public function createdAtForHumans(){
+        return $this->created_at->diffForHumans();
     }
 
     public function scopeLastLimit($query, $numbers)
     {
-        return $query->with('state', 'tags')->orderBy('created_at', 'desc')->limit($numbers)->get();
+        return $query->with('tags', 'state')->orderBy('created_at', 'desc')->limit($numbers)->get();
     }
 
     public function scopeAllPaginate($query, $numbers)
     {
-        return $query->with('state', 'tags')->orderBy('created_at', 'desc')->paginate($numbers);
-    }
-
-    public function getBodyPreview(): string
-    {
-        return Str::limit(100);
-    }
-
-    public function createdAtForHumans()
-    {
-        return $this->published_at->diffForHumans();
+        return $query->with('tags', 'state')->orderBy('created_at', 'desc')->paginate($numbers);
     }
 
     public function scopeFindBySlug($query, $slug)

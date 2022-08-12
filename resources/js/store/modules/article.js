@@ -15,10 +15,7 @@ export const state = {
 }
 
 export const actions = {
-    // context = {state, commit}
     getArticleData(context, payload) {
-        console.log("context", context)
-        console.log("payload", payload)
         axios.get('/api/article-json', { params: {slug:payload } }).then((response) =>{
             context.commit('SET_ARTICLE', response.data.data)
         }).catch(()=>{
@@ -26,8 +23,6 @@ export const actions = {
         });
     },
     viewsIncrement(context, payload){
-        console.log("rootState.slug", context.rootState.slug)
-        console.log("rootGetters.articleSlugRevers", context.rootGetters.articleSlugRevers)
         setTimeout(() => {
             axios.put('/api/article-views-increment',  {slug:payload }).then((response) =>{
                 context.commit('SET_ARTICLE', response.data.data)
@@ -43,7 +38,6 @@ export const actions = {
         }).catch(()=>{
             console.log('Ошибка addLike')
         });
-        console.log("После клика по кнопке", state.likeIt)
     },
     addComment(context, payload){
         axios.post('/api/article-add-comment', { subject:payload.subject, body:payload.body, article_id:payload.article_id}).then((response) =>{
